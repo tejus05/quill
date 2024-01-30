@@ -35,6 +35,7 @@ const Navbar = () => {
               </LoginLink>
               <RegisterLink className={buttonVariants({
                 size: 'sm',
+                variant: "defaultBlack"
               })}>
                 Get Started <ArrowRight/>
               </RegisterLink>
