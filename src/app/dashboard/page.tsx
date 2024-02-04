@@ -13,7 +13,7 @@ const Dashboard = async () => {
 
   return (
     <div>
-      
+      {user.email}
     </div>
   )
 }
