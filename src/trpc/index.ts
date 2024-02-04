@@ -2,6 +2,7 @@ import prisma from '@/db';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { TRPCError } from '@trpc/server';
 import { privateProcedure, publicProcedure, router } from './trpc';
+import { z } from 'zod';
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async() => {
@@ -38,6 +39,31 @@ export const appRouter = router({
         userId
       }
     }) 
+  }),
+  deleteFile: privateProcedure.input(z.object({
+    id: z.string()
+  })).mutation(async({ctx, input}) => {
+    const { userId } = ctx;
+
+    const file = await prisma.file.findFirst({
+      where: {
+        id: input.id,
+        userId
+      }
+    })
+
+    if (!file) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+
+    await prisma.file.delete({
+      where: {
+        id: file.id
+      }
+    })
+
+    return file;
+
   })
 }) 
 
