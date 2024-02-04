@@ -1,7 +1,7 @@
-import { publicProcedure, router } from './trpc'
-import { TRPCError } from '@trpc/server';
 import prisma from '@/db';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { TRPCError } from '@trpc/server';
+import { privateProcedure, publicProcedure, router } from './trpc';
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async() => {
@@ -29,6 +29,15 @@ export const appRouter = router({
     }
 
     return {success: true}
+  }),
+  getUserFiles: privateProcedure.query(async({ctx}) => {
+    const { userId } = ctx;
+
+    return await prisma.file.findMany({
+      where: {
+        userId
+      }
+    }) 
   })
 }) 
 
