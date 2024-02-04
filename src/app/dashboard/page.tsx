@@ -1,7 +1,9 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
+import prisma from '@/db'
+import Dashboard from "@/components/Dashboard";
 
-const Dashboard = async () => {
+const DashboardPage = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -9,13 +11,17 @@ const Dashboard = async () => {
     redirect('/auth-callback?origin=dashboard');
   }
 
-  
+  const dbUser = await prisma.user.findFirst({
+    where: {
+      id: user.id
+    }
+  })
 
-  return (
-    <div>
-      {user.email}
-    </div>
-  )
+  if (!dbUser) {
+    redirect("/auth-callback?origin=dashboard");
+  }
+
+  return <Dashboard/>
 }
 
-export default Dashboard
+export default DashboardPage
