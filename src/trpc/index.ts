@@ -5,7 +5,7 @@ import { privateProcedure, publicProcedure, router } from './trpc';
 import { z } from 'zod';
 
 export const appRouter = router({
-  authCallback: publicProcedure.query(async() => {
+  authCallback: publicProcedure.query(async () => {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
@@ -29,20 +29,20 @@ export const appRouter = router({
       })
     }
 
-    return {success: true}
+    return { success: true }
   }),
-  getUserFiles: privateProcedure.query(async({ctx}) => {
+  getUserFiles: privateProcedure.query(async ({ ctx }) => {
     const { userId } = ctx;
 
     return await prisma.file.findMany({
       where: {
         userId
       }
-    }) 
+    })
   }),
   deleteFile: privateProcedure.input(z.object({
     id: z.string()
-  })).mutation(async({ctx, input}) => {
+  })).mutation(async ({ ctx, input }) => {
     const { userId } = ctx;
 
     const file = await prisma.file.findFirst({
@@ -64,6 +64,24 @@ export const appRouter = router({
 
     return file;
 
+  }),
+  getFile: privateProcedure.input(z.object({
+    key:z.string()
+  })).mutation(async({input,ctx}) => {
+    const { userId } = ctx;
+
+    const file = await prisma.file.findFirst({
+      where: {
+        userId,
+        key: input.key
+      }
+    })
+
+    if (!file) {
+      throw new TRPCError({code: "NOT_FOUND"})
+    }
+
+    return file;
   })
 }) 
 
