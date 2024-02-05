@@ -13,6 +13,7 @@
     "@prisma/client": "^5.9.1",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
+    "@react-pdf/renderer": "^3.3.5",
     "@tailwindcss/typography": "^0.5.10",
     "@tanstack/react-query": "^5.17.19",
     "@trpc/client": "^11.0.0-next-beta.248",
