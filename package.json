@@ -38,6 +38,7 @@
     "react-loading-skeleton": "^3.4.0",
     "react-pdf": "^7.7.0",
     "react-resize-detector": "^10.0.1",
+    "react-textarea-autosize": "^8.5.3",
     "simplebar-react": "^3.2.4",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
