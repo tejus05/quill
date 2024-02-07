@@ -53,7 +53,9 @@ export const ourFileRouter = {
           openAIApiKey: process.env.OPENAI_API_KEY
         })
 
-        await PineconeStore.fromDocuments(docs, embeddings, {
+        await PineconeStore.fromDocuments(
+          docs,
+          embeddings, {
           pineconeIndex,
           namespace: createdFile.id
         })

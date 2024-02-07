@@ -100,6 +100,7 @@ export const POST = async (req: NextRequest) => {
         USER INPUT: ${message}`,
       },
     ],
+    // CONTEXT : pdf content for context
   })
 
   const stream = OpenAIStream(response, {
