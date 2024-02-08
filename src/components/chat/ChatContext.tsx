@@ -41,7 +41,7 @@ export const ChatContextProvider = ({fileId, children}:Props) => {
         throw new Error("Failed to send message")
       }
       
-      return response.body
+      return response.json();
     }
   }); 
 
