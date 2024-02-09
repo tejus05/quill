@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@kinde-oss/kinde-auth-nextjs": "^2.1.5",
     "@langchain/pinecone": "^0.0.3",
+    "@mantine/hooks": "^7.5.2",
     "@pinecone-database/pinecone": "^2.0.1",
     "@prisma/client": "^5.9.1",
     "@radix-ui/react-dialog": "^1.0.5",
