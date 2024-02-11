@@ -50,55 +50,63 @@ export const ChatContextProvider = ({fileId, children}:Props) => {
       return response.body;
     },
     onMutate: async({message}) => {
+      //the purpose of onMutate is to update the user input to UI and return context to onError in case of error || revert the UI to its previous state in case of an error
       backupMessage.current = message;
       setMessage("");
 
-      // step 1
+      // step 1 -> to prevent race conditions
       await utils.getFileMessages.cancel();
 
-      // step 2
+      // step 2 -> get a snapshot
       const previousMessages = utils.getFileMessages.getInfiniteData();
 
       // step 3
-      utils.getFileMessages.setInfiniteData({
-        fileId, limit: INFINITE_QUERY_LIMIT
-      },
+      utils.getFileMessages.setInfiniteData(
+        {
+          fileId,
+          limit: INFINITE_QUERY_LIMIT,
+        },
         (old) => {
           if (!old) {
             return {
               pages: [],
-              pageParams: []
-            }
+              pageParams: [],
+            };
           }
 
-          let newPages = [...old.pages]
+          let newPages = [...old.pages]; //array of objects
 
-          let latestPage = newPages[0]!
+          // console.log(typeof newPages)
+
+          let latestPage = newPages[0]!; //first element of array of objects -> contains first 10 messages [query limit]
 
           latestPage.messages = [
+            //make the newest message appear at the beginning of the array
             {
               createdAt: new Date().toISOString(),
               id: crypto.randomUUID(),
               text: message,
-              isUserMessage: true
+              isUserMessage: true,
             },
-            ...latestPage.messages
-          ]
+            ...latestPage.messages,
+          ]; //move up all the existing previous messages and insert latest user message there
 
           newPages[0] = latestPage;
 
-          return {
+          return { //purpose -> update the cache within React Query after performing an optimistic update
             ...old,
-            pages: newPages
-          }
+            pages: newPages, //now, newPages[0] contains the latest user input
+          };
         }
-      )
+      );
+      // step 3 ends here
 
-      setIsLoading(true)
+      setIsLoading(true);
 
       return {
-        previousMessages: previousMessages?.pages.flatMap((page)=>page.messages) ?? []
-      }
+        previousMessages:
+          previousMessages?.pages.flatMap((page) => page.messages) ?? [],
+      };
     },
     onSuccess: async(stream) => {
       setIsLoading(false);
@@ -114,7 +122,6 @@ export const ChatContextProvider = ({fileId, children}:Props) => {
       const decoder = new TextDecoder();
       let done = false;
 
-      // accumulated response 
       let accumulatedResponse = "";
       while (!done) {
         const { value, done: doneReading } = await reader.read();

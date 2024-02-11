@@ -49,6 +49,7 @@
     "react-resize-detector": "^10.0.1",
     "react-textarea-autosize": "^8.5.3",
     "simplebar-react": "^3.2.4",
+    "stripe": "^14.16.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.3.3",

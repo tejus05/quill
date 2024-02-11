@@ -66,7 +66,7 @@ const Messages = ({ fileId }: MessagesProps) => {
           const isNextMessageSamePerson =
             combinedMessages[i - 1]?.isUserMessage ===
             combinedMessages[i]?.isUserMessage;
-
+          // {console.log(combinedMessages)}
           if (i === combinedMessages.length - 1) {
             return (
               <Message

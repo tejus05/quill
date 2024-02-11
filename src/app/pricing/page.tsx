@@ -1,6 +1,5 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import UpgradeButton from "@/components/UpgradeButton";
-// import UpgradeButton from "@/components/UpgradeButton";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Tooltip,
@@ -113,12 +112,12 @@ const Page = async () => {
                     <p className="my-5 font-display text-6xl font-semibold">
                       ₹{price}
                     </p>
-                    {/* <p className="text-gray-500">per month</p> */}
+                    <p className="text-gray-500">per month</p>
                   </div>
 
                   <div className="flex h-20 items-center justify-center border-b border-t border-gray-200 bg-gray-50">
                     <div className="flex items-center space-x-1">
-                      <p>{quota.toLocaleString()} PDFs included</p>
+                      <p>{quota.toLocaleString()} PDFs/mo included</p>
 
                       <Tooltip delayDuration={300}>
                         <TooltipTrigger className="cursor-default ml-1.5">
