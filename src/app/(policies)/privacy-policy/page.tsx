@@ -74,8 +74,9 @@ const page = () => {
           </p>
           <h3 className="text-xl font-semibold">Your Choices</h3>
           <p>
-            Users may or may not be able to delete their data, which wouldn't be
-            used for any purposes other than communicating with the customer.
+            Users may or may not be able to delete their data, which
+            wouldn&#39;t be used for any purposes other than communicating with
+            the customer.
           </p>
           <h3 className="text-xl font-semibold">
             Updates to this Privacy Policy
