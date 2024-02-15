@@ -10,12 +10,12 @@ const page = () => {
             I am an individual trying to integrate payment gateways in my
             website just for learning purposes. Stripe or RazorPay requires us
             to provide a website with pages such as Terms of Service, Privacy
-            Policy, etc.. Thus, I've created this webpage. All the information
-            provided here is true such as my contact information. Also, I have
-            intentionally kept the prices low just for learning, testing or
-            exploring purposes. Please do not make any unintentional payments.
-            It would be an extra work for an explorer like me to get into
-            refunds and all (though I do not guarantee any refunds, just a
+            Policy, etc.. Thus, I&#39;ve created this webpage. All the
+            information provided here is true such as my contact information.
+            Also, I have intentionally kept the prices low just for learning,
+            testing or exploring purposes. Please do not make any unintentional
+            payments. It would be an extra work for an explorer like me to get
+            into refunds and all (though I do not guarantee any refunds, just a
             possibility).
           </p>
         </div>
@@ -23,10 +23,11 @@ const page = () => {
         <div className="p-2">
           <h2 className="text-2xl font-semibold">Privacy Policy</h2>
           <p>
-            This Privacy Policy describes how thequantumcoder ("we," "us," or
-            "our") collects, uses, and protects your personal information when
-            you visit our website at www.example.com ("the Website"). By using
-            the Website, you agree to the terms outlined in this Privacy Policy.
+            This Privacy Policy describes how thequantumcoder (&quot;we,&quot;
+            &quot;us,&quot; or &quot;our&quot;) collects, uses, and protects
+            your personal information when you visit our website at
+            www.example.com (&quot;the Website&quot;). By using the Website, you
+            agree to the terms outlined in this Privacy Policy.
           </p>
           <h3 className="text-xl font-semibold">Information We Collect</h3>
           <p>
@@ -101,6 +102,6 @@ const page = () => {
       </div>
     </MaxWidthWrapper>
   );
-}
+};
 
-export default page
+export default page;

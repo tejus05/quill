@@ -1,4 +1,4 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper"
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 
 const page = () => {
   return (
@@ -9,9 +9,9 @@ const page = () => {
           I am an individual trying to integrate payment gateways in my website
           just for learning purposes. Stripe or RazorPay requires us to provide
           a website with pages such as Terms of Service, Privacy Policy, etc..
-          Thus, I've created this webpage. All the information provided here is
-          true such as my contact information. Also, I have intentionally kept
-          the prices low just for learning, testing or exploring purposes.
+          Thus, I&#39;ve created this webpage. All the information provided here
+          is true such as my contact information. Also, I have intentionally
+          kept the prices low just for learning, testing or exploring purposes.
           Please do not make any unintentional payments. It would be an extra
           work for an explorer like me to get into refunds and all (though I do
           not guarantee any refunds, just a possibility).
@@ -21,19 +21,20 @@ const page = () => {
       <div className="p-2">
         <h2 className="text-2xl font-semibold">Terms of Service</h2>
         <p>
-          By accessing and using this website ("thequantumcoder"), you agree to
-          comply with and be bound by the following terms and conditions. If you
-          do not agree to these terms, please do not use this website.
+          By accessing and using this website (&quot;thequantumcoder&quot;), you
+          agree to comply with and be bound by the following terms and
+          conditions. If you do not agree to these terms, please do not use this
+          website.
         </p>
         <ol className="list-decimal list-outside pl-6">
           <li>
             <h3 className="text-xl font-semibold">Introduction</h3>
             <p>
-              These terms and conditions ("Terms") govern your use of
+              These terms and conditions (&quot;Terms&quot;) govern your use of
               thequantumcoder website. The website is owned and operated by
               Tejus S, an individual developer located in India. Throughout the
-              Terms, "we," "us," and "our" refer to thequantumcoder and its
-              owner, i.e., Tejus S.
+              Terms, &quot;we,&quot; &quot;us,&quot; and &quot;our&quot; refer
+              to thequantumcoder and its owner, i.e., Tejus S.
             </p>
           </li>
           <li>
@@ -108,6 +109,6 @@ const page = () => {
       </div>
     </MaxWidthWrapper>
   );
-}
+};
 
-export default page
+export default page;

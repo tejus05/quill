@@ -1,4 +1,4 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper"
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 
 const page = () => {
   return (
@@ -10,19 +10,19 @@ const page = () => {
             I am an individual trying to integrate payment gateways in my
             website just for learning purposes. Stripe or RazorPay requires us
             to provide a website with pages such as Terms of Service, Privacy
-            Policy, etc.. Thus, I've created this webpage. All the information
-            provided here is true such as my contact information. Also, I have
-            intentionally kept the prices low just for learning, testing or
-            exploring purposes. Please do not make any unintentional payments.
-            It would be an extra work for an explorer like me to get into
-            refunds and all (though I do not guarantee any refunds, just a
+            Policy, etc.. Thus, I&#39;ve created this webpage. All the
+            information provided here is true such as my contact information.
+            Also, I have intentionally kept the prices low just for learning,
+            testing or exploring purposes. Please do not make any unintentional
+            payments. It would be an extra work for an explorer like me to get
+            into refunds and all (though I do not guarantee any refunds, just a
             possibility).
           </p>
         </div>
         <h3 className="text-xl font-semibold">Customer Support</h3>
         <p>
-          I do not have any team. As mentioned in the disclaimer, I'm just an
-          individual. Thus, I myself will try to provide a good and healthy
+          I do not have any team. As mentioned in the disclaimer, I&#39;m just
+          an individual. Thus, I myself will try to provide a good and healthy
           customer support and try to answer all the queries. Please feel free
           to drop some queries, if you have some.
         </p>
@@ -53,6 +53,6 @@ const page = () => {
       </div>
     </MaxWidthWrapper>
   );
-}
+};
 
-export default page
+export default page;
