@@ -121,8 +121,8 @@ export const ChatContextProvider = ({fileId, children}:Props) => {
       const reader = stream.getReader();
       const decoder = new TextDecoder();
       let done = false;
-      let accumulatedResponse = "";
 
+      let accumulatedResponse = "";
       while (!done) {
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
@@ -138,14 +138,12 @@ export const ChatContextProvider = ({fileId, children}:Props) => {
             if (!old) {
               return {
                 pages: [],
-                pageParams: [],
-              };
+                pageParams: []
+              }
             }
-            let isAiResponseCreated = old.pages.some((page) =>
-              page.messages.some((message) => message.id === "ai-response")
-            ); // check if there is at least one message with the id of "ai-response"
+            let isAiResponseCreated = old.pages.some((page)=>page.messages.some((message)=>message.id === "ai-response"))
 
-            let updatedPages = old.pages.map((page) => {
+            let updatedPages = old.pages.map(page => {
               if (page === old.pages[0]) {
                 let updatedMessages;
 
@@ -155,35 +153,36 @@ export const ChatContextProvider = ({fileId, children}:Props) => {
                       createdAt: new Date().toISOString(),
                       id: "ai-response",
                       text: accumulatedResponse,
-                      isUserMessage: false,
+                      isUserMessage: false
                     },
-                    ...page.messages,
-                  ];
-                } else {
-                  updatedMessages = page.messages.map((message) => {
+                    ...page.messages
+                  ]
+                }
+                else {
+                  updatedMessages = page.messages.map(message => {
                     if (message.id === "ai-response") {
                       return {
                         ...message,
-                        text: accumulatedResponse,
-                      };
+                        text: accumulatedResponse
+                      }
                     }
-                    return message; //user message
-                  });
+                    return message; 
+                  })
                 }
 
                 return {
                   ...page,
-                  messages: updatedMessages,
-                };
+                  messages: updatedMessages
+                }
               }
 
               return page;
-            });
+            })
 
             return {
               ...old,
-              pages: updatedPages,
-            };
+              pages: updatedPages
+            }
           }
         )
       }

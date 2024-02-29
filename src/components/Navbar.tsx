@@ -5,7 +5,6 @@ import MaxWidthWrapper from "./MaxWidthWrapper"
 import { buttonVariants } from "./ui/button"
 import { LoginLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs"
 import { ArrowRight } from "lucide-react";
-import PoliciesDropdown from "./PoliciesDropdown";
 
 const Navbar = () => {
   return (
@@ -20,7 +19,6 @@ const Navbar = () => {
 
           <div className="hidden items-center space-x-4 sm:flex">
             <>
-              <PoliciesDropdown/>
               <Link
                 href='/pricing'
                 className={buttonVariants({

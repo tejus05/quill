@@ -70,43 +70,44 @@ export const appRouter = router({
       if (!dbUser)
         throw new TRPCError({ code: 'UNAUTHORIZED' })
 
-      const subscriptionPlan =
-        await getUserSubscriptionPlan()
+
+      const subscriptionPlan = await getUserSubscriptionPlan()
 
       if (
         subscriptionPlan.isSubscribed &&
         dbUser.stripeCustomerId
-      ) {
-        const stripeSession =
-          await stripe.billingPortal.sessions.create({
+        ) {
+          const stripeSession = await stripe.billingPortal.sessions.create({
             customer: dbUser.stripeCustomerId,
             return_url: billingUrl,
           })
+          
+          return { url: stripeSession.url }
+        }
 
-        return { url: stripeSession.url }
-      }
-
-      const stripeSession =
-        await stripe.checkout.sessions.create({
-          success_url: billingUrl,
-          cancel_url: billingUrl,
-          payment_method_types: ['card'],
-          mode: 'subscription',
-          billing_address_collection: 'auto',
-          line_items: [
-            {
-              price: PLANS.find(
-                (plan) => plan.name === 'Pro'
-              )?.price.priceIds.test,
-              quantity: 1,
+        try {
+          const stripeSession = await stripe.checkout.sessions.create({
+            success_url: billingUrl,
+            cancel_url: billingUrl,
+            payment_method_types: ['card'],
+            mode: 'subscription',
+            billing_address_collection: 'auto',
+            line_items: [
+              {
+                price: PLANS.find(
+                  (plan) => plan.name === 'Pro'
+                  )?.price.priceIds.test,
+                  quantity: 1,
+              },
+            ],
+            metadata: {
+              userId: userId,
             },
-          ],
-          metadata: {
-            userId: userId,
-          },
-        })
-
-      return { url: stripeSession.url }
+          })
+          return { url: stripeSession.url }
+        } catch (error) {
+          console.error('Error creating Stripe session:', error);
+        }
     }
   ),
 

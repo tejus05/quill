@@ -8,6 +8,7 @@ import { ChatContext } from "./ChatContext";
 import { keepPreviousData } from "@tanstack/react-query";
 import { useIntersection } from "@mantine/hooks";
 
+
 interface MessagesProps {
   fileId: string;
 }
