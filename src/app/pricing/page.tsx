@@ -1,5 +1,7 @@
+import CopyCardNumber from "@/components/CopyCardNumber";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import UpgradeButton from "@/components/UpgradeButton";
+import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Tooltip,
@@ -81,6 +83,7 @@ const Page = async () => {
             Whether you&apos;re just trying out our service or need more,
             we&apos;ve got you covered.
           </p>
+          <CopyCardNumber/>
         </div>
 
         <div className="pt-12 grid grid-cols-1 gap-10 lg:grid-cols-2">
@@ -110,7 +113,7 @@ const Page = async () => {
                     </h3>
                     <p className="text-gray-500">{tagline}</p>
                     <p className="my-5 font-display text-6xl font-semibold">
-                      ₹{price}
+                      ${price}
                     </p>
                     <p className="text-gray-500">per month</p>
                   </div>
