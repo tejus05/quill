@@ -9,8 +9,10 @@ import { format } from "date-fns";
 import { Button } from "./ui/button";
 import { useState } from "react";
 
-const Dashboard = () => {
-  const [currentlyDeletingFile, setCurrentlyDeletingFile] = useState<string | null>(null);
+const Dashboard = ({ isSubscribed }: { isSubscribed: boolean }) => {
+  const [currentlyDeletingFile, setCurrentlyDeletingFile] = useState<
+    string | null
+  >(null);
   const { data: files, isLoading } = trpc.getUserFiles.useQuery();
 
   const utils = trpc.useUtils();
@@ -19,20 +21,19 @@ const Dashboard = () => {
     onSuccess: () => {
       utils.getUserFiles.invalidate();
     },
-    onMutate: ({id}) => {
+    onMutate: ({ id }) => {
       setCurrentlyDeletingFile(id);
     },
     onSettled: () => {
       setCurrentlyDeletingFile(null);
-    }
+    },
   });
-
 
   return (
     <main className="mx-auto max-w-7xl md:p-10">
       <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:items-center sm:gap-0">
         <h1 className="mb-3 font-bold text-5xl text-gray-900">My Files</h1>
-        <UploadButton />
+        <UploadButton isSubscribed={isSubscribed} />
       </div>
 
       {files && files.length !== 0 ? (
