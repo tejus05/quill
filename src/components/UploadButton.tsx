@@ -1,27 +1,49 @@
 "use client";
 
-import { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import { trpc } from "../app/_trpc/client";
 import { Button } from "./ui/button";
-
-import Dropzone from "react-dropzone";
-import { Cloud, File, Loader2 } from "lucide-react";
+import { Dialog, DialogContent } from "./ui/dialog";
 import { Progress } from "./ui/progress";
-import { useUploadThing } from "@/lib/uploadThing";
 import { useToast } from "./ui/use-toast";
-import { trpc } from "@/app/_trpc/client";
+import { useUploadThing } from "@/lib/uploadThing";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import { CloudIcon, FileIcon, Loader2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Dropzone, { useDropzone } from "react-dropzone";
+import { HoverShine } from "./HoverShine";
+import { cn } from "../lib/utils";
 
 const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+
   const router = useRouter();
 
-  const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [uploadProgress, setUploadProgress] = useState<number>(0);
   const { toast } = useToast();
 
   const { startUpload } = useUploadThing(
     isSubscribed ? "proPlanUploader" : "freePlanUploader"
   );
+
+  const startSimulatedProgress = () => {
+    console.log("startSimulatedProgress");
+    setUploadProgress(0);
+
+    const interval = setInterval(() => {
+      setUploadProgress((prev) => {
+        console.log("setUploadProgress", prev);
+        if (prev >= 95) {
+          clearInterval(interval);
+          return prev;
+        }
+        return prev + 5;
+      });
+    }, 500);
+
+    return interval;
+  };
 
   const { mutate: startPolling } = trpc.getFile.useMutation({
     onSuccess: (file) => {
@@ -31,34 +53,28 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
     retryDelay: 500,
   });
 
-  const startSimulatedProgress = () => {
-    setUploadProgress(0);
-
-    const interval = setInterval(() => {
-      setUploadProgress((prevProgress) => {
-        if (prevProgress >= 95) {
-          clearInterval(interval);
-          return prevProgress;
-        }
-        return prevProgress + 5;
-      });
-    }, 500);
-
-    return interval;
-  };
+  const { open } = useDropzone();
 
   return (
     <Dropzone
       multiple={false}
+      onDragEnter={() => setIsHovering(true)}
+      onDragLeave={() => setIsHovering(false)}
+      noClick={true}
       onDrop={async (acceptedFile) => {
+        setIsHovering(false);
         setIsUploading(true);
-
         const progressInterval = startSimulatedProgress();
 
         // handle file uploading
         const res = await startUpload(acceptedFile);
 
         if (!res) {
+          // Most likely timeout. Todo: handle this better
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          window.location.reload();
+          return;
+
           return toast({
             title: "Something went wrong",
             description: "Please try again later",
@@ -67,7 +83,6 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
         }
 
         const [fileResponse] = res;
-
         const key = fileResponse?.key;
 
         if (!key) {
@@ -78,24 +93,31 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
           });
         }
 
-        clearInterval(progressInterval);
-        setUploadProgress(100);
-
         startPolling({ key });
+
+        clearInterval(progressInterval);
+        console.log("setUploadProgress", 100);
+        setUploadProgress(100);
       }}
     >
       {({ getRootProps, getInputProps, acceptedFiles }) => (
         <div
+          onClick={open}
           {...getRootProps()}
-          className="border h-64 m-4 border-dashed border-gray-300 rounded-lg"
+          className={cn(
+            "m-4 h-64 rounded-lg border border-dashed border-zinc-300 bg-zinc-50 p-4 dark:border-2 dark:border-zinc-800 dark:bg-zinc-900/25",
+            isHovering && "bg-zinc-100 dark:bg-zinc-900"
+          )}
         >
-          <div className="flex items-center justify-center h-full w-full">
+          <div className="flex h-full w-full items-center justify-center">
             <label
               htmlFor="dropzone-file"
-              className="flex flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+              className={cn(
+                "flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg"
+              )}
             >
-              <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                <Cloud className="h-6 w-6 text-zinc-500 mb-2" />
+              <div className="flex flex-col items-center justify-center pb-6 pt-5">
+                <CloudIcon className="mb-2 h-6 w-6 text-zinc-500" />
                 <p className="mb-2 text-sm text-zinc-700">
                   <span className="font-semibold">Click to upload</span> or drag
                   and drop
@@ -105,41 +127,40 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
                 </p>
               </div>
 
-              {acceptedFiles && acceptedFiles[0] ? (
-                <div className="max-w-xs bg-white flex items-center rounded-md overflow-hidden outline outline-[1px] outline-zinc-200 divide-x divide-zinc-200">
-                  <div className="px-3 py-2 h-full grid place-items-center">
-                    <File className="h-4 w-4 text-blue-500" />
+              {acceptedFiles && acceptedFiles.length ? (
+                <div className="flex max-w-xs items-center divide-x divide-zinc-200 overflow-hidden rounded-md bg-white outline outline-[1px] outline-zinc-200 dark:divide-zinc-700 dark:bg-zinc-900 dark:outline-zinc-700">
+                  <div className="grid h-full place-items-center px-3 py-2">
+                    <FileIcon className="h-4 w-4 text-blue-500" />
                   </div>
-                  <div className="px-3 py-2 h-full text-sm truncate">
+                  <div className="h-full truncate px-3 py-2 text-sm dark:text-zinc-300">
                     {acceptedFiles[0].name}
                   </div>
                 </div>
               ) : null}
 
               {isUploading ? (
-                <div className="w-full mt-4 max-w-xs mx-auto">
+                <div className="mx-auto mt-4 w-full max-w-xs">
                   <Progress
                     indicatorColor={
                       uploadProgress === 100 ? "bg-green-500" : ""
                     }
                     value={uploadProgress}
-                    className="h-1 w-full bg-zinc-200"
+                    className="h-1 w-full"
                   />
                   {uploadProgress === 100 ? (
-                    <div className="flex gap-1 items-center justify-center text-sm text-zinc-700 text-center pt-2">
-                      <Loader2 className="h-3 w-3 animate-spin" />
-                      Redirecting...
+                    <div className="flex items-center justify-center gap-1 pt-2 text-center text-sm text-zinc-700">
+                      <Loader2Icon className="h-3 w-3 animate-spin" />
+                      Redirecting…
                     </div>
                   ) : null}
                 </div>
               ) : null}
 
               <input
-                {...getInputProps()}
                 type="file"
-                id="dropzone-file"
                 className="hidden"
-                disabled
+                {...getInputProps()}
+                id="dropzone-file"
               />
             </label>
           </div>
@@ -150,22 +171,22 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
 };
 
 const UploadButton = ({ isSubscribed }: { isSubscribed: boolean }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Dialog
-      open={isOpen}
-      onOpenChange={(v) => {
-        if (!v) {
-          setIsOpen(v);
-        }
-      }}
-    >
-      <DialogTrigger onClick={() => setIsOpen(true)} asChild>
-        <Button>Upload PDF</Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <HoverShine>
+        <DialogTrigger asChild>
+          <Button
+            variant="defaultBlack"
+            onClick={() => setIsOpen(true)}
+          >
+            Upload PDF
+          </Button>
+        </DialogTrigger>
+      </HoverShine>
 
-      <DialogContent>
+      <DialogContent className="dark:border-neutral-800">
         <UploadDropzone isSubscribed={isSubscribed} />
       </DialogContent>
     </Dialog>
