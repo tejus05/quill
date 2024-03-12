@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { trpc } from "../_trpc/client";
 import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
 
 const Page = () => {
   const router = useRouter();
@@ -16,15 +17,14 @@ const Page = () => {
   });
 
   // Handle success case
-  if (data?.success) {
-    // user is synced to db
-    router.push(origin ? `/${origin}` : "/dashboard");
-  }
-
-  // Handle error case
-  if (error?.data?.code === "UNAUTHORIZED") {
-    router.push("/sign-in");
-  }
+  useEffect(() => {
+    if (data?.success) {
+      router.push(origin ? `/${origin}` : "/dashboard");
+    }
+    if (error?.data?.code === "UNAUTHORIZED") {
+      router.push("/sign-in");
+    }
+  }, [data, error, router, origin]);
 
   return (
     <div className="w-full mt-24 flex justify-center">
