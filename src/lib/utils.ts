@@ -48,12 +48,5 @@ export function constructMetadata({
     },
     icons,
     metadataBase: new URL('https://quill-six-mocha.vercel.app'),
-    themeColor: '#FFF',
-    ...(noIndex && {
-      robots: {
-        index: false,
-        follow: false
-      }
-    })
   }
 }
