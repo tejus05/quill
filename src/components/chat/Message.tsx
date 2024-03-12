@@ -80,6 +80,6 @@ const Message = forwardRef<HTMLDivElement, MessageProps>(
   }
 );
 
-Message.displayName = "Message";
+Message.displayName = "Message"; // to prevent lint warning and for debugging purposes
 
 export default Message;
