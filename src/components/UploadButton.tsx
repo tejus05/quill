@@ -136,12 +136,10 @@ const UploadDropZone = ({ isSubscribed }: { isSubscribed: boolean }) => {
                 </div>
               ) : null}
               <input
-                type="file"
-                id="dropzone-file"
-                name="dropzone-file-input"
-                className="hidden"
                 {...getInputProps()}
-                disabled
+                type='file'
+                id='dropzone-file'
+                className='hidden'
               />
             </label>
           </div>
