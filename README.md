@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Quill - The SaaS App 
 
-## Getting Started
+Welcome to Quill - The SaaS app! This README provides comprehensive information about our SaaS application, including features, setup instructions, and more.
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Quill is a powerful SaaS application that allows users to upload PDF documents, engage in real-time chat with PDFs and ask questions right away, and upgrade to our Pro plan for exclusive benefits. Our platform seamlessly integrates with Stripe for secure payment processing and utilizes CockroachDB and Pinecone for efficient data management. Additionally, we leverage Langchain and OpenAI API to enhance functionality and user experience.
+
+## Features
+
+- **PDF Upload**: Easily upload PDF documents to the platform using UploadThing.
+- **Real-time Chat**: Engage in real-time conversations with other users.
+- **Pro Plan**: Unlock exclusive benefits by upgrading to our Pro plan.
+- **Stripe Integration**: Secure payment processing with Stripe.
+- **CockroachDB**: Resilient and scalable SQL database solution.
+- **Pinecone**: Efficient vector database for data storage and retrieval.
+- **Langchain**: Utilized for document loading and processing.
+- **OpenAI API**: Enhance document understanding and analysis.
+
+## Setup
+
+To set up the environment variables, use the following format:
+
+```plaintext
+KINDE_CLIENT_ID=your_kinde_client_id
+KINDE_CLIENT_SECRET=your_kinde_client_secret
+KINDE_ISSUER_URL=your_kinde_issuer_url
+KINDE_SITE_URL=http://localhost:3000
+KINDE_POST_LOGOUT_REDIRECT_URL=http://localhost:3000
+KINDE_POST_LOGIN_REDIRECT_URL=http://localhost:3000/dashboard
+
+DATABASE_URL="your_database_url"
+
+UPLOADTHING_SECRET=your_uploadthing_secret
+UPLOADTHING_APP_ID=your_uploadthing_app_id
+
+PINECONE_API_KEY=your_pinecone_api_key
+
+OPENAI_API_KEY=your_openai_api_key
+
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Live Demo
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Check out our live demo [here](https://quill-six-mocha.vercel.app/). 
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Mobile Responsiveness
 
-## Learn More
+Quill is fully responsive, ensuring a seamless experience across various devices.
 
-To learn more about Next.js, take a look at the following resources:
+## Authentication
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+For authentication, we've implemented Kinde Auth for secure user management.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Installation
 
-## Deploy on Vercel
+1. Clone the repository:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```bash
+    git clone https://github.com/tejus05/quill.git
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. Install dependencies:
+
+    ```bash
+    cd quill
+    npm install
+    ```
+
+3. Set up environment variables as described above.
+
+4. Run the development server:
+
+    ```bash
+    npm run dev
+    ```
+
+5. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/your_username/quill/blob/main/LICENSE) file for details.
