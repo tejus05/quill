@@ -81,4 +81,4 @@ For authentication, we've implemented Kinde Auth for secure user management.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/your_username/quill/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://choosealicense.com/licenses/mit) file for details.
