@@ -46,6 +46,12 @@ STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 
 Check out our live demo [here](https://quill-six-mocha.vercel.app/). 
 
+
+
+https://github.com/tejus05/quill/assets/118271901/a8b71d9d-8d43-4f1c-bfe4-4228d7cc271f
+
+
+
 ## Mobile Responsiveness
 
 Quill is fully responsive, ensuring a seamless experience across various devices.
