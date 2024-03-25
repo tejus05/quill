@@ -77,13 +77,29 @@ For authentication, we've implemented Kinde Auth for secure user management.
 
 3. Set up environment variables as described above.
 
-4. Run the development server:
+4. **Prisma Setup**: Follow these steps to set up Prisma for database migrations:
+   - Install Prisma globally:
+     ```bash
+     npm install -g prisma
+     ```
+   - Initialize Prisma in your project:
+     ```bash
+     prisma init
+     ```
+   - Configure your database connection in the generated `prisma/schema.prisma` file.
+   - Create an initial migration and apply it to the database:
+     ```bash
+     npx prisma migrate dev
+     ```
+
+5. Run the development server:
 
     ```bash
     npm run dev
     ```
 
-5. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+6. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+
 
 ## License
 
