@@ -9,7 +9,7 @@ Quill is a powerful SaaS application that allows users to upload PDF documents, 
 ## Features
 
 - **PDF Upload**: Easily upload PDF documents to the platform using UploadThing.
-- **Real-time Chat**: Engage in real-time conversations with other users.
+- **Real-time Chat**: Engage in real-time conversations with the AI.
 - **Pro Plan**: Unlock exclusive benefits by upgrading to our Pro plan.
 - **Stripe Integration**: Secure payment processing with Stripe.
 - **CockroachDB**: Resilient and scalable SQL database solution.
